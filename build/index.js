@@ -1,7 +1,15 @@
 const { facebookDialogUrl, exchange, graphGet } = require('@demimonde/graph');
 
-const getRedirect = (ctx, path) => {
-  return `${ctx.protocol}://${ctx.host}${path}/redirect`
+const getRedirect = ({ protocol, host }, path) => {
+  const parts = [
+    protocol,
+    '://',
+    host,
+    path,
+    '/redirect',
+  ]
+  const p = parts.join('')
+  return p
 }
 
 /**
@@ -10,11 +18,11 @@ const getRedirect = (ctx, path) => {
  * @param {Config} [config] Options for the program.
  * @param {string} config.client_id The app's client id.
  * @param {string} config.client_secret The app's client secret.
- * @param {string} [config.path="/auth/facebook"] The app's client secret. Default `/auth/facebook`.
+ * @param {string} [config.path="/auth/facebook"] The server path to start the login flaw and use for redirect (`${path}/redirect`). Default `/auth/facebook`.
  * @param {string} [config.scope] The scope to ask permissions for.
  * @param {(ctx, token, data) => {}} [config.finish="setSession; redirect;"] The function to complete the authentication that receives the token and the data about the user, such as name and id. The default function redirects to `/`. Default `setSession; redirect;`.
  */
-export default async function facebook(router, config = {}) {
+               async function facebook(router, config = {}) {
   const {
     client_id,
     client_secret,
@@ -26,11 +34,17 @@ export default async function facebook(router, config = {}) {
       ctx.redirect('/')
     },
   } = config
+  if (!client_id) {
+    console.warn('No client id - the dialog won\'t work.')
+  }
+  if (!client_secret) {
+    console.warn('No client secret - the redirect won\'t work.')
+  }
 
   router.get(path, async (ctx) => {
     const state = Math.floor(Math.random() * 10000)
     ctx.session.state = state
-    const redirect_uri = getRedirect(ctx)
+    const redirect_uri = getRedirect(ctx, path)
     const u = facebookDialogUrl({
       redirect_uri,
       client_id,
@@ -40,7 +54,7 @@ export default async function facebook(router, config = {}) {
     ctx.redirect(u)
   })
   router.get(`${path}/redirect`, async (ctx) => {
-    const redirect_uri = getRedirect(ctx)
+    const redirect_uri = getRedirect(ctx, path)
     const state = ctx.query.state
     if (state != ctx.session.state) {
       throw new Error('The state is incorrect.')
@@ -64,7 +78,10 @@ export default async function facebook(router, config = {}) {
  * @typedef {Object} Config Options for the program.
  * @prop {string} client_id The app's client id.
  * @prop {string} client_secret The app's client secret.
- * @prop {string} [path="/auth/facebook"] The app's client secret. Default `/auth/facebook`.
+ * @prop {string} [path="/auth/facebook"] The server path to start the login flaw and use for redirect (`${path}/redirect`). Default `/auth/facebook`.
  * @prop {string} [scope] The scope to ask permissions for.
  * @prop {(ctx, token, data) => {}} [finish="setSession; redirect;"] The function to complete the authentication that receives the token and the data about the user, such as name and id. The default function redirects to `/`. Default `setSession; redirect;`.
  */
+
+
+module.exports = facebook
