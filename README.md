@@ -43,22 +43,6 @@ __<a name="type-config">`Config`</a>__: Options for the program.
 | scope              | _string_                      | The scope to ask permissions for.                                                                                                                            | -                       |
 | finish             | _(ctx, token, data) =&gt; {}_ | The function to complete the authentication that receives the token and the data about the user, such as name and id. The default function redirects to `/`. | `setSession; redirect;` |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true" size="15"></a></p>
-
-### finish
-
-The config allows to set the `finish` function that can be used to alter the logic of setting the token on the session or performing additional operations such as storing a new user in the database. The default sets the token on the `ctx.session` and also sets the user data such as name and id in the `ctx.session.user` property.
-
-```js
-    finish = /* async */ (ctx, token, user, /* next */) => {
-      ctx.session.token = token
-      ctx.session.user = user
-      ctx.redirect('/')
-      // await storeInDb(token, user)
-      // await next()
-    },
-```
-
 ```js
 import facebook from '@idio/facebook'
 import idioCore from '@idio/core'
@@ -84,21 +68,37 @@ const Server = async () => {
 ```
 http://localhost:5000 
   <-- GET /auth/facebook
-  --> GET /auth/facebook 302 17ms 385b
-{ body: 'Redirecting to <a href="https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=5823&amp;scope=manage_pages">https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=5823&amp;scope=manage_pages</a>.',
+  --> GET /auth/facebook 302 19ms 385b
+{ body: 'Redirecting to <a href="https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=9896&amp;scope=manage_pages">https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=9896&amp;scope=manage_pages</a>.',
   headers: 
-   { location: 'https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=5823&scope=manage_pages',
+   { location: 'https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=9896&scope=manage_pages',
      'content-type': 'text/html; charset=utf-8',
      'content-length': '385',
      'set-cookie': 
-      [ 'koa:sess=eyJzdGF0ZSI6NTgyMywiX2V4cGlyZSI6MTU0NDUyNDk0Mzc3MCwiX21heEFnZSI6ODY0MDAwMDB9; path=/; httponly',
-        'koa:sess.sig=xc-0tM9bIfNhehuLxZv1KuaEcpY; path=/; httponly' ],
-     date: 'Mon, 10 Dec 2018 10:42:23 GMT',
+      [ 'koa:sess=eyJzdGF0ZSI6OTg5NiwiX2V4cGlyZSI6MTU0NDUyNTAzODgyMSwiX21heEFnZSI6ODY0MDAwMDB9; path=/; httponly',
+        'koa:sess.sig=WN-osI8xJRv23DkzJrMMIhaKW3o; path=/; httponly' ],
+     date: 'Mon, 10 Dec 2018 10:43:58 GMT',
      connection: 'close' },
   statusCode: 302,
   statusMessage: 'Found' }
 
- > Redirect to Dialog https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=5823&scope=manage_pages
+ > Redirect to Dialog https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=9896&scope=manage_pages
+```
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true" size="15"></a></p>
+
+### finish
+
+The config allows to set the `finish` function that can be used to alter the logic of setting the token on the session or performing additional operations such as storing a new user in the database. The default sets the token on the `ctx.session` and also sets the user data such as name and id in the `ctx.session.user` property.
+
+```js
+    finish = /* async */ (ctx, token, user, /* next */) => {
+      ctx.session.token = token
+      ctx.session.user = user
+      ctx.redirect('/')
+      // await storeInDb(token, user)
+      // await next()
+    },
 ```
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>

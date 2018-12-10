@@ -19,6 +19,9 @@ Sets up the `/auth/facebook` and `/auth/facebook/redirect` paths on the router t
 
 %TYPEDEF types/index.xml%
 
+%EXAMPLE: example/example.js, ../src => @idio/facebook%
+%FORK example example/example%
+
 %~ size="15"%
 
 ### finish
@@ -34,8 +37,5 @@ The config allows to set the `finish` function that can be used to alter the log
       // await next()
     },
 ```
-
-%EXAMPLE: example/example.js, ../src => @idio/facebook%
-%FORK example example/example%
 
 %~%
