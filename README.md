@@ -68,24 +68,24 @@ const Server = async () => {
 ```
 http://localhost:5000 
   <-- GET /auth/facebook
-  --> GET /auth/facebook 302 19ms 385b
-{ body: 'Redirecting to <a href="https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=9896&amp;scope=manage_pages">https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=9896&amp;scope=manage_pages</a>.',
+  --> GET /auth/facebook 302 18ms 379b
+{ body: 'Redirecting to <a href="https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=3&amp;scope=manage_pages">https://www.facebook.com/dialog/oauth?client_id=273790443337044&amp;redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&amp;state=3&amp;scope=manage_pages</a>.',
   headers: 
-   { location: 'https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=9896&scope=manage_pages',
+   { location: 'https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=3&scope=manage_pages',
      'content-type': 'text/html; charset=utf-8',
-     'content-length': '385',
+     'content-length': '379',
      'set-cookie': 
-      [ 'koa:sess=eyJzdGF0ZSI6OTg5NiwiX2V4cGlyZSI6MTU0NDUyNTAzODgyMSwiX21heEFnZSI6ODY0MDAwMDB9; path=/; httponly',
-        'koa:sess.sig=WN-osI8xJRv23DkzJrMMIhaKW3o; path=/; httponly' ],
-     date: 'Mon, 10 Dec 2018 10:43:58 GMT',
+      [ 'koa:sess=eyJzdGF0ZSI6MywiX2V4cGlyZSI6MTU0NDUyNTA4MTk5MywiX21heEFnZSI6ODY0MDAwMDB9; path=/; httponly',
+        'koa:sess.sig=OUHuNLlA16CFU5nXF-uiZxSJkmk; path=/; httponly' ],
+     date: 'Mon, 10 Dec 2018 10:44:41 GMT',
      connection: 'close' },
   statusCode: 302,
   statusMessage: 'Found' }
 
- > Redirect to Dialog https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=9896&scope=manage_pages
+ > Redirect to Dialog https://www.facebook.com/dialog/oauth?client_id=273790443337044&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fauth%2Ffacebook%2Fredirect&state=3&scope=manage_pages
 ```
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true" size="15"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true" width="15"></a></p>
 
 ### finish
 

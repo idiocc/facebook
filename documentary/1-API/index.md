@@ -22,7 +22,7 @@ Sets up the `/auth/facebook` and `/auth/facebook/redirect` paths on the router t
 %EXAMPLE: example/example.js, ../src => @idio/facebook%
 %FORK example example/example%
 
-%~ size="15"%
+%~ width="15"%
 
 ### finish
 
