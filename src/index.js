@@ -1,7 +1,15 @@
 import { facebookDialogUrl, exchange, graphGet } from '@demimonde/graph'
 
-const getRedirect = (ctx, path) => {
-  return `${ctx.protocol}://${ctx.host}${path}/redirect`
+const getRedirect = ({ protocol, host }, path) => {
+  const parts = [
+    protocol,
+    '://',
+    host,
+    path,
+    '/redirect',
+  ]
+  const p = parts.join('')
+  return p
 }
 
 /**
@@ -26,11 +34,17 @@ export default async function facebook(router, config = {}) {
       ctx.redirect('/')
     },
   } = config
+  if (!client_id) {
+    console.warn('No client id - the dialog won\'t work.')
+  }
+  if (!client_secret) {
+    console.warn('No client secret - the redirect won\'t work.')
+  }
 
   router.get(path, async (ctx) => {
     const state = Math.floor(Math.random() * 10000)
     ctx.session.state = state
-    const redirect_uri = getRedirect(ctx)
+    const redirect_uri = getRedirect(ctx, path)
     const u = facebookDialogUrl({
       redirect_uri,
       client_id,
@@ -40,7 +54,7 @@ export default async function facebook(router, config = {}) {
     ctx.redirect(u)
   })
   router.get(`${path}/redirect`, async (ctx) => {
-    const redirect_uri = getRedirect(ctx)
+    const redirect_uri = getRedirect(ctx, path)
     const state = ctx.query.state
     if (state != ctx.session.state) {
       throw new Error('The state is incorrect.')

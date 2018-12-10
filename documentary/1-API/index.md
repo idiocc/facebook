@@ -10,12 +10,12 @@ import facebook from '@idio/facebook'
 
 ```## facebook
 [
-  ["arg1", "string"],
-  ["arg2?", "boolean"]
+  ["router", "Router"],
+  ["config", "Config"]
 ]
 ```
 
-Call this function to get the result you want.
+Sets up the `/auth/facebook` and `/auth/facebook/redirect` paths on the router to enable Facebook App Login.
 
 %TYPEDEF types/index.xml%
 
