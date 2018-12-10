@@ -28,10 +28,11 @@ const getRedirect = ({ protocol, host }, path) => {
     client_secret,
     path = '/auth/facebook',
     scope,
-    finish = (ctx, token, user) => {
+    finish = /* async */ (ctx, token, user, /* next */) => {
       ctx.session.token = token
       ctx.session.user = user
       ctx.redirect('/')
+      // await next()
     },
   } = config
   if (!client_id) {
@@ -53,7 +54,7 @@ const getRedirect = ({ protocol, host }, path) => {
     })
     ctx.redirect(u)
   })
-  router.get(`${path}/redirect`, async (ctx) => {
+  router.get(`${path}/redirect`, async (ctx, next) => {
     const redirect_uri = getRedirect(ctx, path)
     const state = ctx.query.state
     if (state != ctx.session.state) {
@@ -69,7 +70,7 @@ const getRedirect = ({ protocol, host }, path) => {
       code: ctx.query.code,
     })
     const data = await graphGet('/me', token, {}, true)
-    await finish(ctx, token, data)
+    await finish(ctx, token, data, next)
   })
 }
 
