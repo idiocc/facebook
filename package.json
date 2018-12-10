@@ -1,6 +1,6 @@
 {
   "name": "@idio/facebook",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "The Facebook OAth Login Routes For The Idio Web Server.",
   "main": "build",
   "scripts": {
