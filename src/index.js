@@ -2,7 +2,7 @@ import { facebookDialogUrl, exchange, graphGet } from '@demimonde/graph'
 
 const getRedirect = ({ protocol, host }, path) => {
   const parts = [
-    protocol,
+    /\.ngrok\.io$/.test(host) ? 'https' : protocol,
     '://',
     host,
     path,
